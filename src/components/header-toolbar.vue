@@ -35,8 +35,8 @@
               :width="210"
               height="100%"
               styling-mode="text"
-            >
-              <user-panel :email="email" :menu-items="userMenuItems" menu-mode="context" />
+            > 
+              <user-panel :name="name" :menu-items="userMenuItems" menu-mode="context" />
             </dx-button>
           </div>
         </template>
@@ -44,7 +44,7 @@
       
       <template #menuUserItem>
         <user-panel
-          :email="email"
+          :name="name"
           :menu-items="userMenuItems"
           menu-mode="list"
         />
@@ -73,8 +73,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
-    const email = ref("");
-    auth.getUser().then((e) => email.value = e.data.email);
+    const name = ref("");
+    auth.getUser().then((e) => name.value = e.data.name);
     
     const userMenuItems = [{
         text: "Profile",
@@ -103,7 +103,7 @@ export default {
     }
 
     return {
-      email,
+      name,
       userMenuItems
     };
   },

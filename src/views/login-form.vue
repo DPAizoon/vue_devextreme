@@ -2,14 +2,14 @@
   <form class="login-form" @submit.prevent="onSubmit">
     <dx-form :form-data="formData" :disabled="loading">
       <dx-item
-        data-field="email"
+        data-field="name"
         editor-type="dxTextBox"
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Email', mode: 'email' }"
+        :editor-options="{ stylingMode: 'filled', placeholder: 'Name'}"
       >
-        <dx-required-rule message="Email is required" />
-        <dx-email-rule message="Email is invalid" />
+        <dx-required-rule message="Name is required" />
         <dx-label :visible="false" />
-      </dx-item>
+      </dx-item> 
+      
       <dx-item
         data-field='password'
         editor-type='dxTextBox'
@@ -34,20 +34,6 @@
         >
         </dx-button-options>
       </dx-button-item>
-      <dx-item>
-        <template #default>
-          <div class="link">
-            <router-link to="/reset-password">Forgot password?</router-link>
-          </div>
-        </template>
-      </dx-item>
-      <dx-button-item>
-        <dx-button-options
-          text="Create an account"
-          width="100%"
-          :on-click="onCreateAccountClick"
-        />
-      </dx-button-item>
       <template #signInTemplate>
         <div>
           <span class="dx-button-text">
@@ -64,7 +50,6 @@
 import DxLoadIndicator from "devextreme-vue/load-indicator";
 import DxForm, {
   DxItem,
-  DxEmailRule,
   DxRequiredRule,
   DxLabel,
   DxButtonItem,
@@ -83,19 +68,15 @@ export default {
     const router = useRouter();
 
     const formData = reactive({
-      email:"",
+      name:"",
       password:""
     });
     const loading = ref(false);
 
-    function onCreateAccountClick() {
-      router.push("/create-account");
-    }
-
     async function onSubmit() {
-      const { email, password } = formData;
+      const { name, password } = formData;
       loading.value = true;
-      const result = await auth.logIn(email, password);
+      const result = await auth.logIn(name, password);
       if (!result.isOk) {
         loading.value = false;
         notify(result.message, "error", 2000);
@@ -107,14 +88,12 @@ export default {
     return {
       formData,
       loading,
-      onCreateAccountClick,
       onSubmit
     };
   },
   components: {
     DxLoadIndicator,
     DxForm,
-    DxEmailRule,
     DxRequiredRule,
     DxItem,
     DxLabel,
