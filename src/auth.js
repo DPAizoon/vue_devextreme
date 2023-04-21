@@ -4,7 +4,7 @@ const defaultUser = {
 };
 
 export default {
-  _user: defaultUser,
+  _user: null,
   loggedIn() {
     return !!this._user;
   },
